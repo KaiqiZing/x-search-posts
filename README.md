@@ -178,6 +178,36 @@ PRESET_KEYWORDS = {
 
 ---
 
+## Contributors
+
+Thanks to everyone who has contributed to this project.
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/KaiqiZing"><img src="https://avatars.githubusercontent.com/u/50580359?v=4" width="100px;" alt="KQ Zing"/><br /><sub><b>KQ Zing</b></sub></a><br /><a href="https://github.com/KaiqiZing/x-search-posts/commits?author=KaiqiZing" title="Code">💻</a> <a href="#-project-ideation-KaiqiZing" title="Project ideation">🤔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.workbuddy.cn"><img src="https://avatars.githubusercontent.com/u/182288760?v=4" width="100px;" alt="WorkBuddy"/><br /><sub><b>WorkBuddy</b></sub></a><br /><a href="#-ai-assistance-WorkBuddy" title="AI assistance">🤖</a> <a href="https://github.com/KaiqiZing/x-search-posts/commits?author=WorkBuddy" title="Code">💻</a> <a href="#-documentation-WorkBuddy" title="Documentation">📖</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+### About the contributors
+
+- **kq-zing** — project ideation, requirements and review.
+- **WorkBuddy** — AI assistant; wrote and refined the scripts, HTML report template and documentation in collaboration with the author.
+
+Emoji legend follows the [all-contributors](https://allcontributors.org/docs/en/emoji-key) specification: 💻 code · 🤔 ideas · 🤖 AI assistance · 📖 documentation.
+
+---
+
 ## License
 
 MIT

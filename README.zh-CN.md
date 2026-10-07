@@ -178,6 +178,36 @@ PRESET_KEYWORDS = {
 
 ---
 
+## 贡献者
+
+感谢所有参与本项目的人。
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/KaiqiZing"><img src="https://avatars.githubusercontent.com/u/50580359?v=4" width="100px;" alt="KQ Zing"/><br /><sub><b>KQ Zing</b></sub></a><br /><a href="https://github.com/KaiqiZing/x-search-posts/commits?author=KaiqiZing" title="Code">💻</a> <a href="#-project-ideation-KaiqiZing" title="Project ideation">🤔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.workbuddy.cn"><img src="https://avatars.githubusercontent.com/u/182288760?v=4" width="100px;" alt="WorkBuddy"/><br /><sub><b>WorkBuddy</b></sub></a><br /><a href="#-ai-assistance-WorkBuddy" title="AI assistance">🤖</a> <a href="https://github.com/KaiqiZing/x-search-posts/commits?author=WorkBuddy" title="Code">💻</a> <a href="#-documentation-WorkBuddy" title="Documentation">📖</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+### 关于贡献者
+
+- **kq-zing** —— 项目构思、需求提出与验收。
+- **WorkBuddy** —— AI 助手；与作者协作编写并打磨脚本、HTML 报告模板与文档。
+
+图标含义遵循 [all-contributors](https://allcontributors.org/docs/en/emoji-key) 规范：💻 代码 · 🤔 创意 · 🤖 AI 协助 · 📖 文档。
+
+---
+
 ## License
 
 MIT
