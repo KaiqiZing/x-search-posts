@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{TITLE}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   x-search-posts HTML 报告模板
+   视觉系统：参考 beautiful-html-templates / Blue Professional
+   （cream 纸底 #fdfae7 + 钴蓝单强调 #1e2bfa + tinted 卡片，无阴影）
+   CJK 适配：正文行高 1.8、中文不做大写变换、标题字距归零
+   ============================================================ */
+:root{
+  --bg:#fdfae7;
+  --primary:#1e2bfa;
+  --text:#111111;
+  --muted:#6b6b6b;
+  --light:#9a9a9a;
+  --accent-light:rgba(30,43,250,.08);
+  --accent-medium:rgba(30,43,250,.15);
+  --border:rgba(30,43,250,.2);
+  --card:rgba(30,43,250,.04);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter','Noto Sans SC',sans-serif;
+  font-size:15px;
+  line-height:1.8;
+  letter-spacing:0;
+}
+.wrap{max-width:900px;margin:0 auto;padding:52px 28px 72px}
+a{color:var(--primary);text-decoration:none;border-bottom:1px solid var(--border);transition:border-color .15s}
+a:hover{border-bottom-color:var(--primary)}
+.disp{font-family:'Space Grotesk','Noto Sans SC',sans-serif}
+.num{font-family:'Space Grotesk','Noto Sans SC',sans-serif;font-variant-numeric:tabular-nums}
+
+/* ---------- 头部 ---------- */
+.eyebrow{
+  font-family:'Space Grotesk','Noto Sans SC',sans-serif;
+  font-weight:600;font-size:13px;color:var(--primary);letter-spacing:.08em;
+}
+.eyebrow--cn{letter-spacing:0;text-transform:none}
+.accent-line{width:60px;height:4px;background:var(--primary);border-radius:2px;margin:16px 0 20px}
+.header{margin-bottom:8px}
+.header .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.pill{
+  display:inline-block;background:var(--accent-light);color:var(--primary);
+  font-family:'Space Grotesk','Noto Sans SC',sans-serif;font-weight:500;font-size:12px;
+  padding:.35rem .9rem;border-radius:100px;white-space:nowrap;
+}
+h1{
+  font-family:'Space Grotesk','Noto Sans SC',sans-serif;
+  font-weight:700;font-size:clamp(28px,5vw,44px);line-height:1.25;letter-spacing:0;
+  margin:4px 0 14px;
+}
+.meta-line{
+  font-family:'Space Grotesk','Noto Sans SC',sans-serif;
+  font-size:12.8px;color:var(--light);letter-spacing:.04em;line-height:1.9;
+}
+.meta-line b{color:var(--muted);font-weight:500}
+
+/* ---------- 整体观察（highlight block） ---------- */
+.observation{
+  background:var(--accent-light);border-left:4px solid var(--primary);
+  border-radius:12px;padding:1.3rem 1.5rem;margin:30px 0 8px;
+}
+.observation h2{
+  font-family:'Space Grotesk','Noto Sans SC',sans-serif;font-weight:600;
+  font-size:16px;color:var(--primary);margin-bottom:.5rem;
+}
+.observation p{color:var(--text);font-size:14.5px;line-height:1.85}
+
+/* ---------- 分组导览 ---------- */
+.toc{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1rem;margin:26px 0 10px}
+.toc a.cell{
+  display:block;background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:.9rem 1rem;border-bottom:1px solid var(--border);
+}
+.toc a.cell:hover{background:var(--accent-light)}
+.toc .k{font-family:'Space Grotesk','Noto Sans SC',sans-serif;font-weight:700;font-size:22px;line-height:1;color:var(--primary)}
+.toc .n{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5}
+
+/* ---------- 分组区块 ---------- */
+.section{margin-top:56px}
+.section-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.section .accent-line{margin:0 0 10px}
+h2.sec-title{
+  font-family:'Space Grotesk','Noto Sans SC',sans-serif;font-weight:600;
+  font-size:clamp(22px,3.4vw,30px);line-height:1.3;letter-spacing:0;
+}
+.sec-note{font-size:12.5px;color:var(--light);margin-top:6px}
+
+/* ---------- 推文卡片 ---------- */
+.tweet{
+  background:var(--card);border:1.5px solid var(--border);border-radius:14px;
+  padding:1.3rem 1.5rem;margin-top:1.2rem;break-inside:avoid;
+}
+.tweet-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.rank{
+  font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;color:var(--primary);
+  min-width:26px;
+}
+.who{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;min-width:0}
+.who a.handle{
+  font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;
+  border-bottom:none;color:var(--text);
+}
+.who a.handle:hover{color:var(--primary)}
+.who .name{font-size:12.5px;color:var(--light)}
+.tweet-metrics{
+  margin-left:auto;text-align:right;font-size:12.5px;color:var(--light);
+  font-family:'Space Grotesk','Noto Sans SC',sans-serif;white-space:nowrap;
+}
+.likes{
+  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;color:var(--primary);
+  line-height:1;margin-right:2px;
+}
+.bar-track{height:6px;background:var(--accent-light);border-radius:6px;margin-top:.9rem;overflow:hidden}
+.bar-fill{height:100%;background:var(--primary);border-radius:6px}
+.summary{margin-top:.9rem;font-size:14.5px;color:var(--text);line-height:1.85}
+.summary.pending{color:var(--light)}
+.orig{
+  margin-top:.8rem;padding:.85rem 1.1rem;background:var(--bg);
+  border:1px solid var(--border);border-radius:10px;
+  font-size:13.5px;color:var(--muted);line-height:1.75;white-space:pre-wrap;word-break:break-word;
+}
+.tweet-foot{
+  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  margin-top:.8rem;font-family:'Space Grotesk','Noto Sans SC',sans-serif;
+  font-size:12px;color:var(--light);letter-spacing:.03em;
+}
+.tweet-foot a{color:var(--primary);font-weight:500}
+
+/* ---------- 检索式折叠 ---------- */
+details.src{margin-top:10px;font-size:12.5px;color:var(--muted)}
+details.src summary{
+  cursor:pointer;font-family:'Space Grotesk','Noto Sans SC',sans-serif;
+  color:var(--light);font-size:12px;letter-spacing:.03em;
+}
+details.src .q{
+  font-family:'Space Grotesk',monospace,'Noto Sans SC',monospace;
+  font-size:12px;color:var(--muted);word-break:break-all;
+  background:var(--card);border:1px solid var(--border);border-radius:8px;padding:.5rem .8rem;margin-top:.5rem;
+}
+
+/* ---------- 页脚 ---------- */
+.footer{margin-top:64px;border-top:1px solid var(--border);padding-top:20px}
+.footer h3{
+  font-family:'Space Grotesk','Noto Sans SC',sans-serif;font-weight:600;
+  font-size:14px;color:var(--primary);margin-bottom:.6rem;
+}
+.footer ul{list-style:none}
+.footer li{
+  font-size:12.5px;color:var(--muted);line-height:1.9;padding-left:1.2em;position:relative;
+}
+.footer li::before{content:"";position:absolute;left:0;top:.85em;width:6px;height:6px;border-radius:50%;background:var(--primary);opacity:.55}
+.gen{margin-top:16px;font-family:'Space Grotesk','Noto Sans SC',sans-serif;font-size:12px;color:var(--light);letter-spacing:.04em}
+
+@media print{
+  body{background:#fff}
+  .tweet{break-inside:avoid;page-break-inside:avoid}
+  details.src{display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="header">
+    <div class="top">
+      <span class="eyebrow">X VIRAL POSTS · 高赞推文巡检</span>
+      <span class="pill">{{TAG_PILL}}</span>
+    </div>
+    <div class="accent-line"></div>
+    <h1>{{TITLE}}</h1>
+    <div class="meta-line">{{META_LINE}}</div>
+  </header>
+
+  {{OBSERVATION}}
+
+  {{TOC}}
+
+  <main>
+{{SECTIONS}}
+  </main>
+
+  <footer class="footer">
+    <h3>口径说明</h3>
+    <ul>
+      <li>时间边界按 UTC 统计，与本地时区可能相差一天；「until」为含当天语义（脚本已自动 +1 天）。</li>
+      <li>点赞数在 X 界面展示超过约 1000 后为近似值，以抓取时界面 / 接口返回为准。</li>
+      <li>X 搜索不等于全集：未被索引或被限流的账号内容可能缺席。</li>
+      <li>本报告由只读采集生成，不含任何点赞、转推、关注等写操作；数据仅供内容调研参考。</li>
+    </ul>
+    <div class="gen">Generated {{GENERATED_AT}} · x-search-posts</div>
+  </footer>
+
+</div>
+</body>
+</html>
