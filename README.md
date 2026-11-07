@@ -4,9 +4,13 @@
 
 **English** | [中文](README.zh-CN.md)
 
+> **Personal, non-commercial use only — and that applies to the scraped data too.**
+> This is **not** an open-source license. Neither this code nor anything it collects may be used
+> commercially, redistributed, or published. Read [License](#license) before you clone.
+
 ## What it is
 
-Maps three parameters — **keyword + time window + minimum likes** — onto X's native advanced-search syntax, fetches the qualifying posts, and renders them into a **self-contained HTML report** you can open offline or share directly.
+Maps three parameters — **keyword + time window + minimum likes** — onto X's native advanced-search syntax, fetches the qualifying posts, and renders them into a **self-contained HTML report** you can open offline, for your own reading.
 
 No need to memorise X search operators. No paid API quota required.
 
@@ -20,7 +24,7 @@ No need to memorise X search operators. No paid API quota required.
 
 - **Three parameters, one command** — keyword, time range and like floor are all you need
 - **7 built-in keyword presets** — Agentic AI, MCP, LLM Evals, Prompt Engineering, Context Engineering, Agent Skill, Vibe Coding; `--preset all` fetches every group
-- **Single-file HTML report** — inline styles, clickable links, works offline, easy to share (consulting-report aesthetic: cream canvas + single cobalt accent, tuned for CJK typography)
+- **Single-file HTML report** — inline styles, clickable links, works offline, one file to keep alongside your own notes (consulting-report aesthetic: cream canvas + single cobalt accent, tuned for CJK typography)
 - **Multi-group digest** — merge several groups into one report with a section index, ideal for recurring sweeps
 - **Three data backends** — browser scraping (default; free, supports history) / official API (optional) / offline processing
 - **Double validation** — results are re-filtered by like threshold and time window after fetching
@@ -129,6 +133,9 @@ keyword/preset ──► build X advanced-search query ──► pick backend
 x-search-posts/
 ├── SKILL.md                     # Agent skill definition (workflow included)
 ├── README.md
+├── README.zh-CN.md
+├── LICENSE                      # Non-commercial, personal-use-only (binding text)
+├── LICENSE.zh-CN.md             # Chinese reference translation
 ├── references/
 │   ├── x-search-operators.md    # X advanced-search operator reference
 │   └── backends.md              # Backend comparison & troubleshooting
@@ -167,7 +174,7 @@ PRESET_KEYWORDS = {
 - **No fabricated data**: likes, timestamps and links all come from actual fetches; missing fields are marked “—” rather than guessed.
 - **Search is not exhaustive**: unindexed or rate-limited accounts may be absent; like counts are approximate above ~1000.
 - **Time boundaries** follow UTC and may differ by a day from your local timezone; `until` is inclusive (the script adds one day automatically).
-- **Please comply with X's Terms of Service and your local laws**; use this project only for lawful content research and sentiment analysis.
+- **Please comply with X's Terms of Service and your local laws**; use this project only for lawful personal content research and sentiment analysis. See [License](#license) — commercial use of **the code or the data** is prohibited.
 
 ## Privacy & credentials
 
@@ -210,4 +217,25 @@ Emoji legend follows the [all-contributors](https://allcontributors.org/docs/en/
 
 ## License
 
-MIT
+**Non-commercial, personal use only.** This is a custom proprietary license, not an open-source one.
+Publishing this repository publicly grants you permission to *read* the code — nothing more. See
+[LICENSE](LICENSE) for the binding text (English controls), or
+[LICENSE.zh-CN.md](LICENSE.zh-CN.md) for the Chinese reference translation.
+
+Three rules, and none of them have exceptions:
+
+| # | Rule | What it forbids |
+| --- | --- | --- |
+| **1** | **The code may not be used commercially** | Selling, licensing, renting, sublicensing or SaaS-ifying this project; embedding it in a paid product; using it in billable consulting, research or advisory work; using it for the business operations of any for-profit entity |
+| **2** | **The data may not be used commercially** | Selling or licensing collected posts; bulk republishing or compiling them into a distributed dataset; using them to train or evaluate a commercial model; feeding them into paid reports, newsletters, dashboards, trading signals or investment-research products |
+| **3** | **Personal use only** | Any use by or on behalf of a third party. No redistribution, no publishing, no running it for someone else, no making its output available to others — free or paid |
+
+**Why the data is separate.** The code is the author's; the posts are not. Collected content belongs to
+X Corp. and to the original authors, and this license grants you no rights in it whatsoever. It also does
+not override X's Terms of Service — complying with those remains your own obligation.
+
+**Not granted:** any rights beyond running and modifying a private copy for yourself. All other rights are
+reserved by the copyright holder. Any breach terminates the grant immediately and requires you to delete
+all copies of the Software and all Data obtained through it.
+
+If you need commercial rights, contact the author for a separate written agreement.
