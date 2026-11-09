@@ -24,6 +24,9 @@ secrets.json
 *.pem
 *.key
 
+# ---- Machine-local weather config ----
+weather.json
+
 # ---- Python ----
 __pycache__/
 *.py[cod]

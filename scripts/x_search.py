@@ -65,6 +65,20 @@ API_ENDPOINT = "https://api.x.com/2/tweets/search/recent"
 TOKEN_ENV_KEYS = ("X_BEARER_TOKEN", "TWITTER_BEARER_TOKEN", "X_API_BEARER_TOKEN")
 HERE = Path(__file__).resolve().parent
 
+_WX: Any = None  # 天气只取一次（--preset all 时 7 组共用）
+
+
+def _weather_once() -> Optional[Dict[str, Any]]:
+    """取一次当天天气给各组 HTML 用；失败返回 None（报告退化为时间胶囊）。"""
+    global _WX
+    if _WX is None:
+        try:
+            import weather as WX  # noqa: WPS433
+            _WX = WX.get_weather() or {}
+        except Exception:  # noqa: BLE001
+            _WX = {}
+    return _WX or None
+
 # ------------------------------------------------------------------ 内置固定关键词
 # 固定关键词分组：key 用于 --preset 与输出文件名，query 为 X 高级搜索检索式（OR 必须大写）。
 # 维护方式：直接增删本表即可，CLI 与文档自动跟随。
@@ -364,7 +378,8 @@ def run_collection(
     json_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
     if args.format in ("html", "both"):
-        html_str = HTMLR.render_report([payload], title=f"X 高赞推文 · {label}")
+        html_str = HTMLR.render_report([payload], title=f"X 高赞推文 · {label}",
+                                       weather=_weather_once())
         html_path = out_dir / f"{stem}_{ts}.html"
         html_path.write_text(html_str, encoding="utf-8")
     if args.format in ("md", "both"):

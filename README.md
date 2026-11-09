@@ -25,6 +25,8 @@ No need to memorise X search operators. No paid API quota required.
 - **Three parameters, one command** — keyword, time range and like floor are all you need
 - **7 built-in keyword presets** — Agentic AI, MCP, LLM Evals, Prompt Engineering, Context Engineering, Agent Skill, Vibe Coding; `--preset all` fetches every group
 - **Single-file HTML report** — inline styles, clickable links, works offline, one file to keep alongside your own notes (consulting-report aesthetic: cream canvas + single cobalt accent, tuned for CJK typography)
+- **Built-in sidebar navigation** — fixed left rail with per-section counts, scroll-spy highlighting and a reading progress bar; collapses into a drawer on narrow screens, hidden when printing
+- **Today's weather & greeting in the header** — fetched automatically via the key-free open-meteo API (location: explicit city → config → IP geolocation → local timezone fallback), with a blessing line; degrades gracefully to a plain date pill if the lookup fails
 - **Multi-group digest** — merge several groups into one report with a section index, ideal for recurring sweeps
 - **Three data backends** — browser scraping (default; free, supports history) / official API (optional) / offline processing
 - **Double validation** — results are re-filtered by like threshold and time window after fetching

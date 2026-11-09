@@ -66,6 +66,32 @@ h1{
 }
 .meta-line b{color:var(--muted);font-weight:500}
 
+/* ---------- 右上角：当日天气 + 祝福 ---------- */
+.header .top{align-items:flex-start}
+.side-meta{display:flex;flex-direction:column;align-items:flex-end;gap:10px;max-width:320px;margin-left:auto}
+.weather{
+  display:flex;align-items:center;gap:12px;
+  background:var(--card);border:1px solid var(--border);border-radius:14px;
+  padding:10px 15px;
+}
+.weather .wicon{flex:0 0 auto;color:var(--primary)}
+.wnow{display:flex;align-items:baseline;gap:8px}
+.wtemp{
+  font-family:'Space Grotesk','Noto Sans SC',sans-serif;font-weight:700;font-size:26px;
+  line-height:1;color:var(--primary);font-variant-numeric:tabular-nums;
+}
+.wcond{font-size:13.5px;font-weight:500;color:var(--text);letter-spacing:0}
+.wsub{
+  font-family:'Space Grotesk','Noto Sans SC',sans-serif;
+  font-size:11.5px;color:var(--light);letter-spacing:.02em;margin-top:5px;white-space:nowrap;
+}
+.wish{font-size:13.5px;line-height:1.7;color:var(--primary);text-align:right;letter-spacing:.01em}
+@media (max-width:720px){
+  .side-meta{align-items:flex-start;max-width:100%}
+  .wish{text-align:left}
+  .wsub{white-space:normal}
+}
+
 /* ---------- 整体观察（highlight block） ---------- */
 .observation{
   background:var(--accent-light);border-left:4px solid var(--primary);
@@ -163,20 +189,95 @@ details.src .q{
 .footer li::before{content:"";position:absolute;left:0;top:.85em;width:6px;height:6px;border-radius:50%;background:var(--primary);opacity:.55}
 .gen{margin-top:16px;font-family:'Space Grotesk','Noto Sans SC',sans-serif;font-size:12px;color:var(--light);letter-spacing:.04em}
 
+/* ---------- 侧边导航（固定左栏 + 滚动定位） ---------- */
+html{scroll-behavior:smooth}
+.observation,.section,.footer{scroll-margin-top:28px}
+
+.sidenav{
+  position:fixed;top:0;bottom:0;left:0;width:256px;z-index:70;
+  background:var(--bg);border-right:1px solid var(--border);
+  padding:26px 16px 20px;display:flex;flex-direction:column;gap:18px;
+  overflow-y:auto;overscroll-behavior:contain;
+}
+.sidenav .progress{position:absolute;left:0;top:0;height:3px;width:0;background:var(--primary);transition:width .08s linear}
+.sidenav .brand{display:block;border-bottom:none}
+.sidenav .brand .t{
+  font-family:'Space Grotesk','Noto Sans SC',sans-serif;font-weight:700;font-size:15px;
+  color:var(--text);line-height:1.45;
+}
+.sidenav .brand .d{
+  font-family:'Space Grotesk','Noto Sans SC',sans-serif;font-size:11.5px;color:var(--light);
+  letter-spacing:.04em;margin-top:4px;
+}
+.sidenav .lbl{
+  font-family:'Space Grotesk','Noto Sans SC',sans-serif;font-size:10.5px;font-weight:600;
+  letter-spacing:.14em;color:var(--primary);opacity:.75;margin-bottom:6px;
+}
+.sidenav ul{list-style:none;display:flex;flex-direction:column;gap:2px}
+.sidenav a.nav-item{
+  display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:9px;
+  border-bottom:none;color:var(--muted);font-size:13px;line-height:1.45;position:relative;
+}
+.sidenav a.nav-item:hover{background:var(--accent-light);color:var(--text)}
+.sidenav a.nav-item .no{
+  font-family:'Space Grotesk',sans-serif;font-size:11px;color:var(--light);
+  min-width:16px;font-variant-numeric:tabular-nums;
+}
+.sidenav a.nav-item .nm{flex:1;min-width:0}
+.sidenav a.nav-item .ct{
+  font-family:'Space Grotesk',sans-serif;font-size:11.5px;font-weight:600;
+  color:var(--light);font-variant-numeric:tabular-nums;
+}
+.sidenav a.nav-item.is-zero{opacity:.45}
+.sidenav a.nav-item.active{background:var(--accent-light);color:var(--primary);font-weight:600}
+.sidenav a.nav-item.active .no,.sidenav a.nav-item.active .ct{color:var(--primary)}
+.sidenav a.nav-item.active::before{
+  content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:3px;height:16px;border-radius:3px;background:var(--primary);
+}
+.sidenav .foot{
+  margin-top:auto;border-top:1px solid var(--border);padding-top:12px;
+  font-size:11.5px;color:var(--light);line-height:1.75;
+}
+.sidenav .foot a{font-size:12px;font-weight:500}
+
+/* 窄屏：抽屉式 */
+.nav-toggle{
+  display:none;position:fixed;left:16px;top:16px;z-index:80;
+  width:42px;height:42px;border:none;border-radius:12px;background:var(--primary);color:#fff;
+  font-size:17px;line-height:1;cursor:pointer;align-items:center;justify-content:center;
+  font-family:'Space Grotesk',sans-serif;
+}
+.nav-backdrop{display:none;position:fixed;inset:0;background:rgba(17,17,17,.30);z-index:65}
+body.nav-open .nav-backdrop{display:block}
+
+@media (min-width:1200px){
+  body{padding-left:256px}
+  .nav-backdrop{display:none!important}
+}
+@media (max-width:1199px){
+  .sidenav{transform:translateX(-100%);transition:transform .22s ease}
+  body.nav-open .sidenav{transform:none}
+  .nav-toggle{display:flex}
+}
+
 @media print{
-  body{background:#fff}
+  body{background:#fff;padding-left:0}
   .tweet{break-inside:avoid;page-break-inside:avoid}
   details.src{display:none}
+  .sidenav,.nav-toggle,.nav-backdrop{display:none!important}
 }
 </style>
 </head>
-<body>
+<body id="top">
+{{SIDENAV}}
+
 <div class="wrap">
 
   <header class="header">
     <div class="top">
       <span class="eyebrow">X VIRAL POSTS · 高赞推文巡检</span>
-      <span class="pill">{{TAG_PILL}}</span>
+      {{SIDE_META}}
     </div>
     <div class="accent-line"></div>
     <h1>{{TITLE}}</h1>
@@ -191,17 +292,70 @@ details.src .q{
 {{SECTIONS}}
   </main>
 
-  <footer class="footer">
+  <footer class="footer" id="notes">
     <h3>口径说明</h3>
     <ul>
       <li>时间边界按 UTC 统计，与本地时区可能相差一天；「until」为含当天语义（脚本已自动 +1 天）。</li>
       <li>点赞数在 X 界面展示超过约 1000 后为近似值，以抓取时界面 / 接口返回为准。</li>
       <li>X 搜索不等于全集：未被索引或被限流的账号内容可能缺席。</li>
       <li>本报告由只读采集生成，不含任何点赞、转推、关注等写操作；数据仅供内容调研参考。</li>
+      <li>右上角天气为生成时刻的实况（open-meteo，免密钥），定位优先用本机配置 / IP 归属地 / 本地时区兜底；数据不做实时刷新。</li>
     </ul>
     <div class="gen">Generated {{GENERATED_AT}} · x-search-posts</div>
   </footer>
 
 </div>
+
+<script>
+(function(){
+  var items = [].slice.call(document.querySelectorAll('.sidenav a.nav-item'));
+  var targets = items.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+  var bar = document.getElementById('nav-progress');
+  var body = document.body;
+  var toggle = document.getElementById('nav-toggle');
+  var backdrop = document.getElementById('nav-backdrop');
+
+  function update(){
+    var y = window.pageYOffset || document.documentElement.scrollTop;
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    if (bar) bar.style.width = (max > 0 ? Math.min(100, y / max * 100) : 0) + '%';
+
+    var idx = 0;
+    for (var i = 0; i < targets.length; i++){
+      var t = targets[i];
+      if (t && t.getBoundingClientRect().top <= 140) idx = i;
+    }
+    if (max > 0 && y >= max - 4) idx = targets.length - 1;
+    var notes = document.getElementById('notes');
+    if (notes && notes.getBoundingClientRect().top <= window.innerHeight * 0.5) idx = -1;
+
+    items.forEach(function(a, i){
+      a.classList.toggle('active', i === idx);
+      if (i === idx) a.setAttribute('aria-current', 'true');
+      else a.removeAttribute('aria-current');
+    });
+  }
+
+  var ticking = false;
+  window.addEventListener('scroll', function(){
+    if (!ticking){
+      ticking = true;
+      requestAnimationFrame(function(){ update(); ticking = false; });
+    }
+  }, {passive:true});
+  window.addEventListener('resize', update);
+  window.addEventListener('load', update);
+  update();
+
+  items.forEach(function(a){
+    a.addEventListener('click', function(){ body.classList.remove('nav-open'); });
+  });
+  if (toggle) toggle.addEventListener('click', function(){ body.classList.toggle('nav-open'); });
+  if (backdrop) backdrop.addEventListener('click', function(){ body.classList.remove('nav-open'); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') body.classList.remove('nav-open');
+  });
+})();
+</script>
 </body>
 </html>

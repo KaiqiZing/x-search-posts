@@ -39,6 +39,25 @@ except Exception:
 
 import html_report as HR  # noqa: E402
 
+try:  # 天气模块可选：缺失或取数失败都不影响出报告
+    import weather as WX  # noqa: E402
+except Exception:  # noqa: BLE001
+    WX = None  # type: ignore[assignment]
+
+
+def _pick_weather(args):
+    """按参数取当天天气；任何异常都降级为 None（报告中退化为时间胶囊）。"""
+    if args.no_weather or WX is None:
+        return None
+    try:
+        return WX.get_weather(
+            city=args.city, lat=args.lat, lon=args.lon,
+            refresh=args.refresh_weather, use_cache=not args.no_weather_cache,
+        )
+    except Exception as exc:  # noqa: BLE001
+        print(f"[render_html] 天气获取失败，已跳过：{exc}", file=sys.stderr)
+        return None
+
 
 def main(argv=None) -> int:
     p = argparse.ArgumentParser(
@@ -49,6 +68,15 @@ def main(argv=None) -> int:
     p.add_argument("--observation-file", help="从文件读取整体观察文本（优先于 --observation）")
     p.add_argument("--title", default="X 高赞推文巡检报告", help="报告主标题")
     p.add_argument("--tag", help="头部右上角 pill 文案，默认取时间范围")
+    p.add_argument("--wish", default=HR.WISH_DEFAULT, help="天气卡片下方的祝福语")
+    p.add_argument("--nav-title", help="左侧导航顶部标题（默认截取主标题前 22 字）")
+    p.add_argument("--nav-sub", help="左侧导航副标题（默认时间范围）")
+    p.add_argument("--no-weather", action="store_true", help="不取天气（右上角退化为时间胶囊）")
+    p.add_argument("--city", help="指定天气城市，如 深圳；默认自动定位")
+    p.add_argument("--lat", type=float, help="指定纬度（配合 --lon）")
+    p.add_argument("--lon", type=float, help="指定经度（配合 --lat）")
+    p.add_argument("--refresh-weather", action="store_true", help="忽略天气缓存，强制重新取数")
+    p.add_argument("--no-weather-cache", action="store_true", help="本次不读写天气缓存")
     p.add_argument("--out", required=True, help="输出 HTML 路径")
     args = p.parse_args(argv)
 
@@ -70,12 +98,18 @@ def main(argv=None) -> int:
         elif args.observation:
             observation = args.observation
 
+        wx = _pick_weather(args)
+
         html_str = HR.render_report(
             payloads,
             title=args.title,
             tag_pill=args.tag or "",
             observation=observation,
             summaries=summaries,
+            weather=wx,
+            wish=args.wish,
+            nav_title=args.nav_title,
+            nav_sub=args.nav_sub,
         )
         out_path = Path(args.out).expanduser().resolve()
         out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -89,6 +123,10 @@ def main(argv=None) -> int:
             "sections": len(payloads),
             "tweets": sum(int(p.get("meta", {}).get("count") or 0) for p in payloads),
             "summaries_filled": n_sum,
+            "weather": ({
+                "city": wx.get("city"), "temp": wx.get("temp"), "cond": wx.get("cond"),
+                "loc_source": wx.get("loc_source"), "cached": bool(wx.get("cached")),
+            } if wx else None),
         }, ensure_ascii=False))
         return 0
     except Exception as exc:  # noqa: BLE001

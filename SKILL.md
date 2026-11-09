@@ -144,6 +144,24 @@ python scripts/render_html.py --json x_hot_a.json x_hot_b.json … \
     --title "X 高赞推文周报 <日期区间>" --out x_weekly_digest_<日期>.html
 ```
 
+渲染时**默认自动生成**两类页面部件，无需手工后处理：
+
+1. **左侧固定导航栏**（≥1200px 宽屏）：顶部报告标题 + 日期，下分「概览 / 分组」两段，每组带序号、章节名、条数角标（0 条自动淡化），底部「口径说明 ↓」；滚动时当前章节自动高亮 + 顶部阅读进度条；<1200px 收成 ☰ 抽屉；打印时自动隐藏。
+2. **右上角当日天气 + 祝福语**：默认祝福语为「一周开心，一周快乐，一周智能报告与你相逢。」；天气数据由 `scripts/weather.py` 自动获取（open-meteo，免密钥），30 分钟磁盘缓存（`~/.workbuddy/skill-data/x-search-posts/weather_cache.json`），批量渲染 7 组只打一次接口。取数失败自动降级为时间范围胶囊，不阻塞出报告。
+
+相关参数：
+
+| 参数 | 说明 |
+| --- | --- |
+| `--city 深圳` | 指定天气城市（也可用环境变量 `X_WEATHER_CITY` 或配置文件） |
+| `--lat / --lon` | 直接指定经纬度 |
+| `--no-weather` | 不取天气，右上角退化为时间胶囊 |
+| `--refresh-weather` / `--no-weather-cache` | 忽略缓存重新取数 / 本次不读写缓存 |
+| `--wish "文案"` | 自定义祝福语 |
+| `--nav-title / --nav-sub` | 自定义侧栏顶部标题 / 副标题 |
+
+天气定位优先级（`scripts/weather.py`）：显式参数 → 环境变量 `X_WEATHER_CITY` → 技能目录 `weather.json`（`{"city":"深圳"}` 或 `{"lat":..,"lon":..}`，可自建）→ IP 归属地（ipwho.is → ipapi.co → ip-api.com）→ 本地时区兜底城市（默认深圳）。**IP 与本机时区冲突时（如本机中国时区、IP 落在境外机房）判定 IP 为代理出口，直接用时区兜底城市**，避免贴错城市。单独调试：`python scripts/weather.py --json`。
+
 5. 用 `present_files` 展示最终 HTML（单文件自包含，链接可点击）。若同一事件被多人讨论，摘要在组内合并成「事件 → 代表推文」呈现，不要平铺 20 条。
 
 HTML 视觉模板在 `templates/report.html`（参考 beautiful-html-templates / Blue Professional）。改样式直接编辑该文件；渲染逻辑在 `scripts/html_report.py`，CLI 入口是 `scripts/render_html.py`。
@@ -163,7 +181,8 @@ HTML 视觉模板在 `templates/report.html`（参考 beautiful-html-templates /
 
 ## 参考文档
 
-- `templates/report.html`——HTML 报告视觉模板（参考 beautiful-html-templates / Blue Professional：cream 纸底 + 钴蓝单强调 + tinted 卡片），改样式直接编辑。
+- `templates/report.html`——HTML 报告视觉模板（参考 beautiful-html-templates / Blue Professional：cream 纸底 + 钴蓝单强调 + tinted 卡片），内含左侧固定导航与右上角天气卡片样式；改样式直接编辑。
+- `scripts/weather.py`——当日天气与定位模块（open-meteo 免密钥），可独立运行调试；配置文件为技能根目录 `weather.json`（可选，用于固定城市）。
 - `references/x-search-operators.md`——X 高级搜索运算符全表、时间边界陷阱、可直接套用的检索模板。
 - `references/backends.md`——后端选型对比、首次登录步骤、组件安装路径、故障排查表。
 
